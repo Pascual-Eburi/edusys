@@ -9,13 +9,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Course extends Model
 {
     use HasFactory;
-    protected $fillable = ['name'];
+    protected array $fillable = ['name'];
 
     /**
      * The sections that belong to the course.
      */
     public function sections(): BelongsToMany
     {
-        return $this->belongsToMany(Section::class);
+        return $this->belongsToMany(Section::class, 'course_sections');
+    }
+
+    public function educationLevels(): BelongsToMany
+    {
+        return $this->belongsToMany(EducationLevel::class, 'course_levels');
     }
 }
