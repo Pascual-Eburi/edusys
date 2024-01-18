@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             $table->date('start_date');
             $table->date('end_date');
-            $table->foreignId('assessment_period_id')->references('id')->on('assessment_periods');
-            $table->foreignId('academic_course_id')->references('id')->on('academic_courses');
+            $table->foreignId('assessment_period_id')->constrianed('assessment_periods');
+            $table->foreignId('academic_course_id')->constrained('academic_courses');
             $table->timestamps();
+          
 
             // AAdd unique restriction to avoid duplicate pairs
-            $table->unique(['academic_course_id', 'assessment_period_id']);
+            $table->unique(['academic_course_id', 'assessment_period_id'], 'unique_academic_course_assessment_period');
         });
     }
 
