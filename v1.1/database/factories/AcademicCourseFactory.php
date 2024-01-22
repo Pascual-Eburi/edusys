@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AcademicCourseFactory extends Factory
 {
+    private $startYears = [];
     /**
      * Define the model's default state.
      *
@@ -17,7 +18,14 @@ class AcademicCourseFactory extends Factory
     public function definition(): array
     {
 
-        $startYear = $this->faker->numberBetween(2000, date('Y'));
+        
+        do {
+            $startYear = $this->faker->numberBetween(2000, date('Y'));
+        } while (in_array($startYear, $this->startYears));
+
+        // avoid duplicates
+        $this->startYears[] = $startYear;
+
         $endYear = $startYear + 1;
 
         $startDay = $this->faker->numberBetween(1, 30);
@@ -35,7 +43,8 @@ class AcademicCourseFactory extends Factory
         return [
             'name' => $name,
             'start_date' => date($startDate),
-            'end_date' => date($endDate)
+            'end_date' => date($endDate),
+            'enrolment_price' =>$this->faker->numberBetween(100000, 250000)
         ];
     }
 }
