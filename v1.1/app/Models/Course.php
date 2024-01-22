@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Course extends Model
 {
     use HasFactory;
-    protected array $fillable = ['name'];
+    protected $fillable = ['name'];
 
     /**
      * The sections that belong to the course.
