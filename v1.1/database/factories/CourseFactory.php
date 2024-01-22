@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CourseFactory extends Factory
 {
+    private $names = [];
     /**
      * Define the model's default state.
      *
@@ -16,8 +17,18 @@ class CourseFactory extends Factory
      */
     public function definition(): array
     {
+        $faker = \Faker\Factory::create();
+        $faker->addProvider(new \Bezhanov\Faker\Provider\Educator($faker));
+
+        do {
+            $name = substr($faker->course, 0, 30);
+        } while (in_array($name, $this->names));
+
+        // Agregar el nombre actual al array de nombres
+        $this->names[] = $name;
+
         return [
-            'name' => fake()->course()
+            'name' => $name,
         ];
-    }
+    } 
 }
